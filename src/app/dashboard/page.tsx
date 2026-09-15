@@ -1,11 +1,10 @@
 import fs from "fs";
 import path from "path";
 
-export default function Home() {
-  const filePath = path.join(process.cwd(), "public", "index.html");
+export default function DashboardPage() {
+  const filePath = path.join(process.cwd(), "public", "dashboard.html");
   const html = fs.readFileSync(filePath, "utf-8");
   
-  // Extract body inner HTML or full HTML
   return (
     <div 
       dangerouslySetInnerHTML={{ __html: html }} 
