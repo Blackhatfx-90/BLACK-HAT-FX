@@ -675,37 +675,13 @@ $(document).ready(function() {
 <!-- video hero-->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const videoEl = document.querySelector('.hero_lottie video');
-
-  if (!videoEl) return;
-
-  // отключаем стандартный loop
-  videoEl.loop = false;
-
-  // сначала на паузе
-  videoEl.pause();
-
-  let hasPlayed = false;
-
-  // запуск при скролле
-  window.addEventListener('scroll', function () {
-    if (!hasPlayed && window.scrollY > 0) {
-      videoEl.play();
-      hasPlayed = true;
-    }
+  const videos = document.querySelectorAll('video');
+  videos.forEach(function(videoEl) {
+    videoEl.muted = true;
+    videoEl.playsInline = true;
+    videoEl.loop = true;
+    videoEl.play().catch(function() {});
   });
-
-  // когда видео закончилось
-  videoEl.addEventListener('ended', function () {
-
-    // оставляем последний кадр на 1 сек
-    setTimeout(() => {
-      videoEl.currentTime = 0;
-      videoEl.play();
-    }, 1000);
-
-  });
-
 });
 </script>
 
