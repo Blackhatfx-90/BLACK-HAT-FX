@@ -16,42 +16,40 @@ import {
 } from "@/components/ui/sidebar"
 import {
   LayoutDashboardIcon,
-  WalletIcon,
-  ArrowLeftRightIcon,
-  CreditCardIcon,
-  ChartAreaIcon,
+  ShieldCheckIcon,
   TargetIcon,
+  BrainCircuitIcon,
+  BotIcon,
+  UsersIcon,
+  TrendingUpIcon,
   SettingsIcon,
   LifeBuoyIcon,
   LandmarkIcon,
-  SendIcon,
-  TrendingUpIcon,
-  BitcoinIcon,
   BellIcon,
+  SparklesIcon,
   LogInIcon,
   UserPlusIcon,
 } from "lucide-react"
 
 const data = {
   user: {
-    name: "Abderrahim G.",
-    email: "abderrahim@fintech.com",
+    name: "Alex Trader",
+    email: "alex@propguard.ai",
     avatar: "/avatars/user.jpg",
   },
-  navDaily: [
-    { title: "Overview", url: "/dashboard", icon: <LayoutDashboardIcon /> },
-    { title: "Accounts", url: "/accounts", icon: <WalletIcon /> },
-    { title: "Transactions", url: "/transactions", icon: <ArrowLeftRightIcon /> },
-    { title: "Cards", url: "/cards", icon: <CreditCardIcon /> },
+  navPropGuard: [
+    { title: "Dashboard", url: "/dashboard", icon: <LayoutDashboardIcon /> },
+    { title: "Funded Accounts", url: "/accounts", icon: <ShieldCheckIcon /> },
+    { title: "Rule Compliance", url: "/budgets", icon: <TargetIcon /> },
   ],
-  navMoney: [
-    { title: "Transfers", url: "/transfers", icon: <SendIcon /> },
-    { title: "Investments", url: "/investments", icon: <TrendingUpIcon /> },
-    { title: "Crypto", url: "/crypto", icon: <BitcoinIcon /> },
+  navAI: [
+    { title: "AI Trade Analyser", url: "/analytics", icon: <BrainCircuitIcon /> },
+    { title: "AI Profile Coach", url: "/crypto", icon: <SparklesIcon /> },
   ],
-  navInsights: [
-    { title: "Analytics", url: "/analytics", icon: <ChartAreaIcon /> },
-    { title: "Budgets", url: "/budgets", icon: <TargetIcon /> },
+  navMarketplace: [
+    { title: "EA & Bot Marketplace", url: "/cards", icon: <BotIcon /> },
+    { title: "Copy Trading", url: "/investments", icon: <UsersIcon /> },
+    { title: "Capital Scaling", url: "/transfers", icon: <TrendingUpIcon /> },
   ],
   navAuth: [
     { title: "Sign In", url: "/sign-in", icon: <LogInIcon /> },
@@ -75,9 +73,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <LandmarkIcon className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">BLACK-HAT.FX</span>
+                <span className="truncate font-bold tracking-tight">BLACK-HAT.FX</span>
                 <span className="truncate text-xs text-muted-foreground">
-                  Finance Dashboard
+                  PropGuard AI • Rules Shield
                 </span>
               </div>
             </SidebarMenuButton>
@@ -85,9 +83,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navDaily} label="Daily" />
-        <NavMain items={data.navMoney} label="Money" />
-        <NavMain items={data.navInsights} label="Insights" />
+        <NavMain items={data.navPropGuard} label="Prop Firm Guard" />
+        <NavMain items={data.navAI} label="AI Intelligence" />
+        <NavMain items={data.navMarketplace} label="Marketplace & Copy" />
         <NavMain items={data.navAuth} label="Auth" />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
@@ -97,3 +95,4 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     </Sidebar>
   )
 }
+
