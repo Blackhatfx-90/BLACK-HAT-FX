@@ -1,11 +1,19 @@
+import type { Metadata } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "BLACK-HAT.FX — Institutional Fintech & Trading Dashboard",
+  description: "A premium open-source fintech dashboard built with Next.js, shadcn/ui, and Tailwind CSS.",
+};
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body style={{ margin: 0, padding: 0 }}>
+    <html lang="en" className="dark">
+      <body className="bg-[#090d16] text-slate-100 antialiased min-h-screen">
         {children}
       </body>
     </html>
