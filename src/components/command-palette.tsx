@@ -1,145 +1,157 @@
-"use client";
+"use client"
 
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState, useCallback } from "react"
+import { useRouter } from "next/navigation"
 import {
-  Search,
-  LayoutDashboard,
-  Wallet,
-  ArrowLeftRight,
-  CreditCard,
-  Send,
-  TrendingUp,
-  Bitcoin,
-  ChartArea,
-  Target,
-  Settings,
-  HelpCircle,
-  X,
-  Sparkles
-} from "lucide-react";
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "@/components/ui/command"
+import {
+  LayoutDashboardIcon,
+  WalletIcon,
+  ArrowLeftRightIcon,
+  CreditCardIcon,
+  SendIcon,
+  TrendingUpIcon,
+  BitcoinIcon,
+  ChartAreaIcon,
+  TargetIcon,
+  SettingsIcon,
+  BellIcon,
+  LogInIcon,
+  UserPlusIcon,
+  LifeBuoyIcon,
+  SearchIcon,
+  MoonIcon,
+  SunIcon,
+  MonitorIcon,
+} from "lucide-react"
+import { useTheme } from "next-themes"
+import { contacts, recentTransactions, cryptoCoins } from "@/data/seed"
 
-interface CommandPaletteProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
-  const [query, setQuery] = useState("");
-  const router = useRouter();
+export function CommandPalette() {
+  const [open, setOpen] = useState(false)
+  const router = useRouter()
+  const { setTheme } = useTheme()
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        if (isOpen) {
-          onClose();
-        } else {
-          // Open triggered from parent or direct listener
-        }
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        setOpen((o) => !o)
       }
-      if (e.key === "Escape" && isOpen) {
-        onClose();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+    }
+    document.addEventListener("keydown", down)
+    return () => document.removeEventListener("keydown", down)
+  }, [])
 
-  if (!isOpen) return null;
-
-  const items = [
-    { label: "Overview Dashboard", href: "/dashboard/overview", icon: LayoutDashboard, category: "Pages" },
-    { label: "Monthly Budgets", href: "/dashboard/budgets", icon: Target, category: "Pages" },
-    { label: "Bank Accounts", href: "/dashboard/accounts", icon: Wallet, category: "Pages" },
-    { label: "Transaction History", href: "/dashboard/transactions", icon: ArrowLeftRight, category: "Pages" },
-    { label: "Virtual & Physical Cards", href: "/dashboard/cards", icon: CreditCard, category: "Pages" },
-    { label: "Instant Transfers", href: "/dashboard/transfers", icon: Send, category: "Money" },
-    { label: "Investments Portfolio", href: "/dashboard/investments", icon: TrendingUp, category: "Money" },
-    { label: "Crypto Assets & Spreads", href: "/dashboard/crypto", icon: Bitcoin, category: "Money" },
-    { label: "Analytics & Performance", href: "/dashboard/analytics", icon: ChartArea, category: "Insights" },
-    { label: "Account Settings", href: "/dashboard/settings", icon: Settings, category: "System" },
-    { label: "Help & Support", href: "/dashboard/support", icon: HelpCircle, category: "System" },
-  ];
-
-  const filteredItems = items.filter(item =>
-    item.label.toLowerCase().includes(query.toLowerCase()) ||
-    item.category.toLowerCase().includes(query.toLowerCase())
-  );
-
-  const handleSelect = (href: string) => {
-    router.push(href);
-    onClose();
-  };
+  const run = useCallback(
+    (fn: () => void) => {
+      setOpen(false)
+      fn()
+    },
+    []
+  )
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 bg-black/70 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-      <div 
-        className="w-full max-w-xl bg-[#111726] border border-white/10 rounded-xl shadow-2xl overflow-hidden flex flex-col"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Search Input Bar */}
-        <div className="flex items-center px-4 py-3 border-b border-white/10 bg-[#0d1322]">
-          <Search className="w-5 h-5 text-muted-foreground mr-3 shrink-0" />
-          <input
-            type="text"
-            placeholder="Search pages, transactions, budgets, or commands..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="w-full bg-transparent text-white placeholder-muted-foreground text-sm focus:outline-none"
-            autoFocus
-          />
-          <button 
-            onClick={onClose}
-            className="p-1 rounded-md text-muted-foreground hover:text-white hover:bg-white/10 transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
+    <CommandDialog
+      open={open}
+      onOpenChange={setOpen}
+      title="Command Palette"
+      description="Search pages, transactions, contacts, and more"
+    >
+      <Command>
+        <CommandInput placeholder="Type a command or search..." />
+        <CommandList>
+          <CommandEmpty>No results found.</CommandEmpty>
 
-        {/* Results List */}
-        <div className="max-h-96 overflow-y-auto p-2 space-y-1">
-          {filteredItems.length === 0 ? (
-            <div className="py-8 text-center text-sm text-muted-foreground">
-              No results found for &quot;{query}&quot;
-            </div>
-          ) : (
-            filteredItems.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <button
-                  key={index}
-                  onClick={() => handleSelect(item.href)}
-                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm text-slate-300 hover:text-white hover:bg-blue-600/20 hover:border hover:border-blue-500/30 transition-all text-left group"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="p-1.5 rounded-md bg-white/5 group-hover:bg-blue-500/20 group-hover:text-blue-400 text-slate-400 transition-colors">
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <span className="font-medium">{item.label}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white/5 text-slate-400 uppercase tracking-wider">
-                      {item.category}
-                    </span>
-                    <Sparkles className="w-3.5 h-3.5 text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                </button>
-              );
-            })
-          )}
-        </div>
+          <CommandGroup heading="Pages">
+            {[
+              { label: "Dashboard", icon: LayoutDashboardIcon, href: "/dashboard" },
+              { label: "Accounts", icon: WalletIcon, href: "/accounts" },
+              { label: "Transactions", icon: ArrowLeftRightIcon, href: "/transactions" },
+              { label: "Transfers", icon: SendIcon, href: "/transfers" },
+              { label: "Cards", icon: CreditCardIcon, href: "/cards" },
+              { label: "Crypto", icon: BitcoinIcon, href: "/crypto" },
+              { label: "Analytics", icon: ChartAreaIcon, href: "/analytics" },
+              { label: "Investments", icon: TrendingUpIcon, href: "/investments" },
+              { label: "Budgets", icon: TargetIcon, href: "/budgets" },
+              { label: "Settings", icon: SettingsIcon, href: "/settings" },
+              { label: "Notifications", icon: BellIcon, href: "/notifications" },
+              { label: "Help & Support", icon: LifeBuoyIcon, href: "/support" },
+              { label: "Sign In", icon: LogInIcon, href: "/sign-in" },
+              { label: "Sign Up", icon: UserPlusIcon, href: "/sign-up" },
+            ].map((page) => (
+              <CommandItem key={page.href} onSelect={() => run(() => router.push(page.href))}>
+                <page.icon className="mr-2 size-4" />
+                {page.label}
+              </CommandItem>
+            ))}
+          </CommandGroup>
 
-        {/* Footer shortcuts */}
-        <div className="px-4 py-2 border-t border-white/5 bg-[#090d16] flex items-center justify-between text-xs text-muted-foreground">
-          <span>Navigation Shortcuts</span>
-          <div className="flex items-center gap-2">
-            <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-[10px] font-mono">↑↓ Navigate</kbd>
-            <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-[10px] font-mono">↵ Select</kbd>
-            <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-[10px] font-mono">ESC Close</kbd>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+          <CommandSeparator />
+
+          <CommandGroup heading="Recent Transactions">
+            {recentTransactions.slice(0, 5).map((tx) => (
+              <CommandItem key={tx.id} onSelect={() => run(() => router.push("/transactions"))}>
+                <SearchIcon className="mr-2 size-4" />
+                {tx.merchant}
+                <span className="ml-auto text-xs tabular-nums text-muted-foreground">
+                  {tx.amount > 0 ? "+" : ""}${Math.abs(tx.amount).toFixed(2)}
+                </span>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+
+          <CommandSeparator />
+
+          <CommandGroup heading="Quick Transfer">
+            {contacts.slice(0, 4).map((c) => (
+              <CommandItem key={c.id} onSelect={() => run(() => router.push("/transfers"))}>
+                <SendIcon className="mr-2 size-4" />
+                Send to {c.name}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+
+          <CommandSeparator />
+
+          <CommandGroup heading="Crypto">
+            {cryptoCoins.slice(0, 4).map((coin) => (
+              <CommandItem key={coin.id} onSelect={() => run(() => router.push("/crypto"))}>
+                <BitcoinIcon className="mr-2 size-4" />
+                {coin.name}
+                <span className="ml-auto text-xs tabular-nums text-muted-foreground">
+                  ${coin.price.toLocaleString()}
+                </span>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+
+          <CommandSeparator />
+
+          <CommandGroup heading="Theme">
+            <CommandItem onSelect={() => run(() => setTheme("light"))}>
+              <SunIcon className="mr-2 size-4" />
+              Light Mode
+            </CommandItem>
+            <CommandItem onSelect={() => run(() => setTheme("dark"))}>
+              <MoonIcon className="mr-2 size-4" />
+              Dark Mode
+            </CommandItem>
+            <CommandItem onSelect={() => run(() => setTheme("system"))}>
+              <MonitorIcon className="mr-2 size-4" />
+              System Theme
+            </CommandItem>
+          </CommandGroup>
+        </CommandList>
+      </Command>
+    </CommandDialog>
+  )
 }
