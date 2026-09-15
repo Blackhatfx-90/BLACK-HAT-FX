@@ -1,10 +1,10 @@
 import { DashboardShell } from "@/components/dashboard-shell";
-import { OverviewView } from "@/components/overview-view";
+import { SettingsView } from "@/components/settings-view";
 
-export default function DashboardPage() {
+export default function SettingsPage() {
   return (
     <DashboardShell>
-      <OverviewView />
+      <SettingsView />
     </DashboardShell>
   );
 }

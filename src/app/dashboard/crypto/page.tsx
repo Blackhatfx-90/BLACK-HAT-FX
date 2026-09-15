@@ -1,10 +1,10 @@
 import { DashboardShell } from "@/components/dashboard-shell";
-import { OverviewView } from "@/components/overview-view";
+import { CryptoView } from "@/components/crypto-view";
 
-export default function DashboardPage() {
+export default function CryptoPage() {
   return (
     <DashboardShell>
-      <OverviewView />
+      <CryptoView />
     </DashboardShell>
   );
 }
