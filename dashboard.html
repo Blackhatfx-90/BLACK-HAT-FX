@@ -16,6 +16,33 @@
     <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
+<div id="app-preloader" style="position: fixed; inset: 0; background-color: #0b0e14; z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease, visibility 0.6s ease;">
+  <div style="display: flex; align-items: center; gap: 12px; color: #ffffff; animation: pulseLogo 1.5s infinite ease-in-out;">
+    <svg width="36" height="34" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 20.3577C2.34897 20.3577 4.44864 20.0461 6.49972 19.1508C8.82062 18.1378 10.8559 16.5681 12.4252 14.5806C12.9067 13.9708 13.4219 13.1242 13.9046 12.2436C15.3623 9.58466 15.6598 6.51379 15.6598 3.48152V1.12347C15.6598 0.502996 15.1568 0 14.5363 0H0V4.69793H11.4725C11.496 5.46776 11.4396 6.24075 11.3026 7.00443C10.9792 8.80727 10.2162 10.5025 9.08109 11.9401C7.946 13.3776 6.47392 14.5129 4.79523 15.2456C3.28287 15.9057 1.82697 16.1818 0 16.1818V20.3577Z" fill="#ffffff"/>
+      <rect x="17.2266" y="20.3584" width="20.3577" height="4.69793" transform="rotate(-90 17.2266 20.3584)" fill="#ffffff"/>
+    </svg>
+    <span style="font-family: Inter, system-ui, -apple-system, sans-serif; font-weight: 700; font-size: 26px; letter-spacing: -0.5px; color: #ffffff; text-transform: uppercase;">BLACK-HAT.FX</span>
+  </div>
+  <style>
+    @keyframes pulseLogo {
+      0%, 100% { opacity: 0.7; transform: scale(0.98); }
+      50% { opacity: 1; transform: scale(1.02); }
+    }
+  </style>
+  <script>
+    window.addEventListener("load", function() {
+      setTimeout(function() {
+        var loader = document.getElementById("app-preloader");
+        if (loader) {
+          loader.style.opacity = "0";
+          loader.style.visibility = "hidden";
+          setTimeout(function() { loader.remove(); }, 600);
+        }
+      }, 700);
+    });
+  </script>
+</div>
     <div class="app-shell">
         
         <!-- SIDEBAR NAVIGATION -->
@@ -25,7 +52,13 @@
                     <div class="brand-icon">
                         <i data-lucide="zap"></i>
                     </div>
-                    <div class="brand-title">BLACK-HAT<span class="accent">.FX</span></div>
+                    <div class="brand-logo-container" style="display: inline-flex; align-items: center; gap: 10px; font-family: Inter, system-ui, -apple-system, sans-serif; text-decoration: none;">
+  <svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; flex-shrink: 0; color: var(--text-primary, #ffffff);">
+    <path d="M0 20.3577C2.34897 20.3577 4.44864 20.0461 6.49972 19.1508C8.82062 18.1378 10.8559 16.5681 12.4252 14.5806C12.9067 13.9708 13.4219 13.1242 13.9046 12.2436C15.3623 9.58466 15.6598 6.51379 15.6598 3.48152V1.12347C15.6598 0.502996 15.1568 0 14.5363 0H0V4.69793H11.4725C11.496 5.46776 11.4396 6.24075 11.3026 7.00443C10.9792 8.80727 10.2162 10.5025 9.08109 11.9401C7.946 13.3776 6.47392 14.5129 4.79523 15.2456C3.28287 15.9057 1.82697 16.1818 0 16.1818V20.3577Z" fill="currentColor"/>
+    <rect x="17.2266" y="20.3584" width="20.3577" height="4.69793" transform="rotate(-90 17.2266 20.3584)" fill="currentColor"/>
+  </svg>
+  <span style="font-weight: 700; font-size: 19px; letter-spacing: -0.4px; color: var(--text-primary, #ffffff); text-transform: uppercase;">BLACK-HAT.FX</span>
+</div>
                 </div>
 
                 <div class="nav-section-label">Trading Engine</div>
