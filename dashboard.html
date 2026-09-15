@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Platform Dashboard | Institutional Quant Workspace</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans, Inter, Space Grotesk, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="app-shell">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="sidebar">
+            <div>
+                <div class="brand-header">
+                    <div class="brand-icon">
+                        <i data-lucide="zap"></i>
+                    </div>
+                    <div class="brand-title">VETERIAN<span class="accent">.FX</span></div>
+                </div>
+
+                <div class="nav-section-label">Trading Engine</div>
+                <div class="sidebar-menu">
+                    <a href="#" class="menu-item active" data-tab="overview">
+                        <i data-lucide="layout-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="menu-item" data-tab="chart">
+                        <i data-lucide="candlestick-chart"></i>
+                        <span>Live Markets</span>
+                        <span class="item-badge">LIVE</span>
+                    </a>
+                    <a href="#" class="menu-item" data-tab="bots">
+                        <i data-lucide="cpu"></i>
+                        <span>Quant EAs & Bots</span>
+                    </a>
+                    <a href="#" class="menu-item" data-tab="arbitrage">
+                        <i data-lucide="git-compare"></i>
+                        <span>Arbitrage Spreads</span>
+                    </a>
+                    <a href="#" class="menu-item" data-tab="history">
+                        <i data-lucide="history"></i>
+                        <span>Order History</span>
+                    </a>
+                </div>
+
+                <div class="nav-section-label">Portfolio & Risk</div>
+                <div class="sidebar-menu">
+                    <a href="#" class="menu-item" data-tab="wallet">
+                        <i data-lucide="wallet"></i>
+                        <span>Capital Allocation</span>
+                    </a>
+                    <a href="#" class="menu-item" data-tab="settings">
+                        <i data-lucide="settings"></i>
+                        <span>Settings</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="user-profile-card">
+                    <div class="avatar">ST</div>
+                    <div class="user-info">
+                        <span class="user-name">Gyan Trader</span>
+                        <span class="user-tier">PRO ALLOCATION</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN WORKSPACE -->
+        <div class="main-workspace">
+            
+            <!-- TOP HEADER -->
+            <header class="top-header">
+                <div class="header-left">
+                    <div class="search-box">
+                        <i data-lucide="search"></i>
+                        <input type="text" placeholder="Search AAPL, NVDA, XAUUSD, Brent..." id="global-search">
+                    </div>
+                    <div class="live-ticker-strip">
+                        <div class="ticker-pair">
+                            <span>XAU/USD</span>
+                            <span class="font-mono up">2,742.65 (+0.68%)</span>
+                        </div>
+                        <div class="ticker-pair">
+                            <span>NVDA</span>
+                            <span class="font-mono up">$138.25 (+2.4%)</span>
+                        </div>
+                        <div class="ticker-pair">
+                            <span>BRENT</span>
+                            <span class="font-mono up">$76.40 (+1.2%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <!-- Light / Dark Theme Switcher -->
+                    <button class="theme-switch-pill" id="theme-toggle">
+                        <i data-lucide="sun" class="theme-icon" id="theme-icon"></i>
+                        <span id="theme-label">Light Mode</span>
+                    </button>
+
+                    <a href="index.html" class="theme-switch-pill" title="Back to Landing Page">
+                        <i data-lucide="external-link" class="theme-icon"></i>
+                        <span>Landing Page</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- DASHBOARD GRID -->
+            <main class="dashboard-grid">
+                
+                <!-- Metrics Summary Bar with Mini Sparkline Canvases -->
+                <div class="metrics-row">
+                    <div class="metric-card">
+                        <div class="mc-left">
+                            <span class="mc-label">Total Account Equity</span>
+                            <span class="mc-value">$142,850.00</span>
+                            <span class="mc-change up">+18.4% YTD</span>
+                        </div>
+                        <canvas class="sparkline-canvas" id="spark-1"></canvas>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="mc-left">
+                            <span class="mc-label">Today's PnL</span>
+                            <span class="mc-value" style="color:var(--bullish);">+$4,120.50</span>
+                            <span class="mc-change up">+2.98% today</span>
+                        </div>
+                        <canvas class="sparkline-canvas" id="spark-2"></canvas>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="mc-left">
+                            <span class="mc-label">Arbitrage Spread Edge</span>
+                            <span class="mc-value">+2.84%</span>
+                            <span class="mc-change up">Optimal Spread</span>
+                        </div>
+                        <canvas class="sparkline-canvas" id="spark-3"></canvas>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="mc-left">
+                            <span class="mc-label">Active Quant EAs</span>
+                            <span class="mc-value">4 Running</span>
+                            <span class="mc-change up">1.2ms Latency</span>
+                        </div>
+                        <canvas class="sparkline-canvas" id="spark-4"></canvas>
+                    </div>
+                </div>
+
+                <!-- Main Chart Workspace Card -->
+                <div class="card chart-workspace">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i data-lucide="candlestick-chart"></i>
+                            <span id="chart-symbol">XAU/USD — Gold / U.S. Dollar</span>
+                        </div>
+                        <div class="chart-header-tools">
+                            <button class="btn-tf">15s</button>
+                            <button class="btn-tf active">1M</button>
+                            <button class="btn-tf">5M</button>
+                            <button class="btn-tf">1H</button>
+                            <button class="btn-tf">1D</button>
+                        </div>
+                    </div>
+                    <div class="canvas-chart-holder">
+                        <canvas id="dashboard-chart-canvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Trade Order Execution Panel -->
+                <div class="card trade-panel">
+                    <div class="card-title">
+                        <i data-lucide="zap"></i> Fast Execution
+                    </div>
+                    
+                    <div class="order-segment">
+                        <button class="segment-btn buy active" id="tab-buy">BUY / LONG</button>
+                        <button class="segment-btn sell" id="tab-sell">SELL / SHORT</button>
+                    </div>
+
+                    <div class="form-field">
+                        <div class="field-label">
+                            <span>Order Type</span>
+                        </div>
+                        <select class="field-input" id="order-type">
+                            <option value="market">Market Execution</option>
+                            <option value="limit">Limit Order</option>
+                            <option value="stop">Stop Order</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <div class="field-label">
+                            <span>Volume / Lot Size</span>
+                            <span>Max: 10.0 Lots</span>
+                        </div>
+                        <input type="number" class="field-input" value="1.00" step="0.10" id="order-volume">
+                    </div>
+
+                    <div class="form-field">
+                        <div class="field-label">
+                            <span>Stop Loss (SL Price)</span>
+                            <span class="font-mono">20 Pips</span>
+                        </div>
+                        <input type="number" class="field-input" value="2722.65" id="order-sl">
+                    </div>
+
+                    <div class="form-field">
+                        <div class="field-label">
+                            <span>Take Profit (TP Price)</span>
+                            <span class="font-mono">45 Pips</span>
+                        </div>
+                        <input type="number" class="field-input" value="2787.65" id="order-tp">
+                    </div>
+
+                    <button class="btn-order-submit buy" id="btn-execute-trade">
+                        EXECUTE BUY ORDER
+                    </button>
+                </div>
+
+                <!-- Open Positions Table -->
+                <div class="card positions-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i data-lucide="list"></i> Open Positions & Active EAs (4)
+                        </div>
+                    </div>
+                    <div class="data-table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>SYMBOL</th>
+                                    <th>TYPE</th>
+                                    <th>VOLUME</th>
+                                    <th>OPEN PRICE</th>
+                                    <th>CURRENT</th>
+                                    <th>PNL ($)</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody id="positions-tbody">
+                                <tr>
+                                    <td><strong>XAU/USD</strong></td>
+                                    <td><span class="badge buy">BUY</span></td>
+                                    <td>1.00 Lot</td>
+                                    <td>2,738.20</td>
+                                    <td>2,742.65</td>
+                                    <td style="color:var(--bullish);">+$445.00</td>
+                                    <td><button class="btn-close-order">Close</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>BRENT CRUDE</strong></td>
+                                    <td><span class="badge buy">BUY</span></td>
+                                    <td>500 Bbls</td>
+                                    <td>$75.20</td>
+                                    <td>$76.40</td>
+                                    <td style="color:var(--bullish);">+$600.00</td>
+                                    <td><button class="btn-close-order">Close</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>NVDA</strong></td>
+                                    <td><span class="badge buy">BUY</span></td>
+                                    <td>50 Shares</td>
+                                    <td>$135.00</td>
+                                    <td>$138.25</td>
+                                    <td style="color:var(--bullish);">+$162.50</td>
+                                    <td><button class="btn-close-order">Close</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>EUR/USD</strong></td>
+                                    <td><span class="badge buy">BUY</span></td>
+                                    <td>2.00 Lots</td>
+                                    <td>1.08200</td>
+                                    <td>1.08450</td>
+                                    <td style="color:var(--bullish);">+$500.00</td>
+                                    <td><button class="btn-close-order">Close</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Watchlist -->
+                <div class="card watchlist-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i data-lucide="star"></i> Watchlist
+                        </div>
+                    </div>
+                    <div class="watchlist-items">
+                        <div class="wl-row">
+                            <div>
+                                <div class="wl-sym">XAU/USD</div>
+                                <div class="wl-name">Gold Spot</div>
+                            </div>
+                            <div class="wl-price" style="color:var(--bullish);">2,742.65</div>
+                        </div>
+                        <div class="wl-row">
+                            <div>
+                                <div class="wl-sym">BRENT</div>
+                                <div class="wl-name">Crude Oil</div>
+                            </div>
+                            <div class="wl-price" style="color:var(--bullish);">$76.40</div>
+                        </div>
+                        <div class="wl-row">
+                            <div>
+                                <div class="wl-sym">NVDA</div>
+                                <div class="wl-name">NVIDIA Corp.</div>
+                            </div>
+                            <div class="wl-price" style="color:var(--bullish);">$138.25</div>
+                        </div>
+                        <div class="wl-row">
+                            <div>
+                                <div class="wl-sym">AAPL</div>
+                                <div class="wl-name">Apple Inc.</div>
+                            </div>
+                            <div class="wl-price" style="color:var(--bearish);">$224.10</div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
